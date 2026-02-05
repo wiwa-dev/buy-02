@@ -1,7 +1,7 @@
 # === Variables de configuration ===
 ALIAS=api
 PASSWORD=Dinamo22**
-DOMAIN=api.buy01.site
+DOMAIN=buy01.site
 LETSENCRYPT_DIR=/etc/letsencrypt/live/$(DOMAIN)
 KEYSTORE_DIR=backend/services/gateway/src/main/resources/keystore/
 KEYSTORE_FILE=$(KEYSTORE_DIR)/keystore.p12
