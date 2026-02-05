@@ -1,0 +1,119 @@
+services:
+
+  
+  # =======================
+  # 🧠 Config Server
+  # =======================
+  config-server:
+    image: wiwadev01/config-server:latest
+    container_name: config_server
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+    networks:
+      - microservices-net
+
+  # =======================
+  # 🔍 Discovery Server (Eureka)
+  # =======================
+  discovery:
+    image: wiwadev01/discovery:latest
+    container_name: discovery_server
+    depends_on:
+      - config-server
+    ports:
+      - "8761:8761"
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_INSTANCE_HOSTNAME=discovery
+    networks:
+      - microservices-net
+
+  # =======================
+  # 🌐 API Gateway
+  # =======================
+  gateway:
+    image: wiwadev01/gateway:latest
+    container_name: api_gateway
+    ports:
+      - "8222:8222"
+    depends_on:
+      - discovery
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_INSTANCE_HOSTNAME=http://discovery
+    networks:
+      - microservices-net
+
+  # =======================
+  # 👤 User Service
+  # =======================
+  user-service:
+    image: wiwadev01/user-service:latest
+    container_name: user_service
+    depends_on:
+      - config-server
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_INSTANCE_HOSTNAME=http://discovery
+      - GATEWAY_HOSTNAME=gateway
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+    networks:
+      - microservices-net
+
+  # =======================
+  # 🛍️ Product Service
+  # =======================
+  product-service:
+    image: wiwadev01/product-service:latest
+    container_name: product_service
+    depends_on:
+      - config-server
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_INSTANCE_HOSTNAME=http://discovery
+      - GATEWAY_HOSTNAME=gateway
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - SPRING_DATA_MONGODB_PORT=27017
+    networks:
+      - microservices-net
+
+  # =======================
+  # 🖼️ Media Service
+  # =======================
+  media-service:
+    image: wiwadev01/media-service:latest
+    container_name: media_service
+    depends_on:
+      - config-server
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_INSTANCE_HOSTNAME=http://discovery
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - SPRING_DATA_MONGODB_HOST=mongodb
+      - GATEWAY_HOSTNAME=gateway
+      - SPRING_DATA_MONGODB_PORT=27017
+    networks:
+      - microservices-net
+
+  # =======================
+  # 🖼️ FrontEnd
+  # =======================
+  frontend-service:
+    image: wiwadev01/front-service:latest
+    container_name: frontend_app
+    ports:
+      - "4200:80"
+    networks:
+      - microservices-net
+
+# =======================
+# 🔗 Network + Volumes
+# =======================
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  mongo:
