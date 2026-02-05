@@ -49,8 +49,8 @@ docker exec -u root -it $JENKINS_CONTAINER_NAME groupadd -g $DOCKER_GID docker
 echo "=== 🔧 Ajout utilisateur jenkins au groupe docker ==="
 docker exec -u root -it $JENKINS_CONTAINER_NAME usermod -aG docker jenkins
 
-echo "=== 🔧 Se deconnecter sur root et aller sur jenkins user ==="
-docker exec -u root -it $JENKINS_CONTAINER_NAME su - jenkins && exit
+# echo "=== 🔧 Se deconnecter sur root et aller sur jenkins user ==="
+# docker exec -u root -it $JENKINS_CONTAINER_NAME su - jenkins && exit
 
 echo "=== ✅ Jenkins démarré ! ==="
 echo "Accès : http://<IP_VPS>:$JENKINS_HTTP_PORT"
