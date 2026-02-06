@@ -3,12 +3,12 @@ set -e  # Stopper le script si une commande échoue
 
 echo "=== 🚀 Démarrage automatique des services Docker ==="
 
-# 1️⃣ Démarrer les services de base (MongoDB, Kafka, etc.)
-#echo "[1/3] Lancement des services système (app.yml)..."
-#docker compose -f app.yml up -d
+1️⃣ Démarrer les services de base (MongoDB, Kafka, etc.)
+echo "[1/3] Lancement des services système (app.yml)..."
+docker compose -f app.yml up -d
 
 # Attendre quelques secondes
-#sleep 10
+sleep 10
 
 # 2️⃣ Démarrer uniquement le Config Server
 echo "[2/3] Lancement du Config Server..."
