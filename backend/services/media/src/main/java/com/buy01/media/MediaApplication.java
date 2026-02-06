@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
+// test
 public class MediaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MediaApplication.class, args);
