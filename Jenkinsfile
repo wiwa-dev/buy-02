@@ -99,7 +99,7 @@ pipeline {
                 }
             }
         }
-        stage('Unit Tess Frontend Services') {
+        stage('Unit Test Frontend Services') {
             when {
                 expression {
                     FRONTEND_CHANGED
@@ -140,24 +140,24 @@ pipeline {
                                             timeout(time: 2, unit: 'MINUTES') {
                                                 waitUntil {
                                                     def status = sh(
-                                                        script: '''
-                                                            curl -s -u "$SONAR_TOKEN:" "$API_SONAR/ce/task?id='"${ceTaskId}"'" | jq -r '.task.status'
-                                                            ''',
+                                                        script: """
+                                                            curl -s -u "\$SONAR_TOKEN:" "\$API_SONAR/ce/task?id=${ceTaskId}" | jq -r '.task.status'
+                                                            """,
                                                         returnStdout: true
                                                     ).trim()
                                                     return status == 'SUCCESS'
                                                 }
                                             }
                                             def analysisId = sh(
-                                                script: '''
-                                                    curl -s -u "$SONAR_TOKEN:" "$API_SONAR/ce/task?id='"${ceTaskId}"'" | jq -r '.task.analysisId'
-                                                    ''',
+                                                script: """
+                                                    curl -s -u "\$SONAR_TOKEN:" "\$API_SONAR/ce/task?id=${ceTaskId}" | jq -r '.task.analysisId'
+                                                    """,
                                                 returnStdout: true
                                             ).trim()
                                             def qualityGate = sh(
-                                                script: '''
-                                                    curl -s -u "$SONAR_TOKEN:" "$API_SONAR/qualitygates/project_status?analysisId='"${analysisId}"'" | jq -r '.projectStatus.status'
-                                                    ''',
+                                                script: """
+                                                    curl -s -u "\$SONAR_TOKEN:" "\$API_SONAR/qualitygates/project_status?analysisId=${analysisId}" | jq -r '.projectStatus.status'
+                                                    """,
                                                 returnStdout: true
                                             ).trim()
                                             if (qualityGate != 'OK') {
