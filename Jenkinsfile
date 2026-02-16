@@ -110,7 +110,7 @@ pipeline {
                     dir('frontend') {
                         sh '''
                         npm ci
-                        export CHROME_BIN=/usr/bin/google-chrome
+                        export CHROME_BIN=/usr/bin/chromium
                         npm run test
                         '''
                     }
@@ -161,7 +161,7 @@ pipeline {
                                                 returnStdout: true
                                             ).trim()
                                             if (qualityGate != 'OK') {
-                                                throw new Exception("Quality Gate FAILED")
+                                                throw new Exception('Quality Gate FAILED')
                                             }
                                             echo "✅ Quality Gate PASSED for ${svc}"
                                         }
@@ -180,7 +180,7 @@ pipeline {
                             tokenCredentialId: 'slack-cred'
                         )
                         currentBuild.result = 'FAILURE'
-                        error("Quality Gate FAILED")
+                        error('Quality Gate FAILED')
                     }
                 }
             }
@@ -226,9 +226,9 @@ pipeline {
                                         returnStdout: true
                                     ).trim()
                                     if (qualityGate != 'OK') {
-                                        throw new Exception("Quality Gate FAILED")
+                                        throw new Exception('Quality Gate FAILED')
                                     }
-                                    echo "✅ Quality Gate PASSED for frontend"
+                                    echo '✅ Quality Gate PASSED for frontend'
                                 }
                             }
                         } catch (err) {
@@ -243,12 +243,12 @@ pipeline {
                             tokenCredentialId: 'slack-cred'
                         )
                         currentBuild.result = 'FAILURE'
-                        error("Quality Gate FAILED")
+                        error('Quality Gate FAILED')
                     }
                 }
             }
         }
-        
+
         stage('Build Backend Server Config') {
             when {
                 expression {
