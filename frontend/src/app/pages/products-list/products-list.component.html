@@ -74,6 +74,25 @@
       <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Explore Products</h2>
       <p class="text-gray-600 dark:text-gray-400">Discover amazing products from our sellers</p>
     </div>
+    @if(!loading && productInfos.length > 0){
+    <div class="mb-8" >
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Search by product name, description, or seller..."
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+          class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+        />
+        <svg class="absolute left-4 top-3.5 w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        Found <span class="font-semibold">{{ filteredProducts.length }}</span> of <span class="font-semibold">{{ productInfos.length }}</span> products
+      </p>
+    </div>
+    }
 
     @if (loading) {
     <div class="flex justify-center items-center py-20">
@@ -91,9 +110,9 @@
     </div>
     }
 
-    @if (!loading && productInfos.length > 0) {
+    @if (!loading && filteredProducts.length > 0) {
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      @for (productInfo of productInfos; track productInfo.product.id) {
+      @for (productInfo of filteredProducts; track productInfo.product.id) {
       <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow group">
         <div class="aspect-square bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
           @if (productInfo.medias && productInfo.medias.length > 0) {
@@ -146,6 +165,7 @@
 
           <button
             [disabled]="productInfo.product.quantity === 0"
+            [routerLink] = "[]"
             class="w-full py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             {{ productInfo.product.quantity === 0 ? 'Out of Stock' : 'View Details' }}

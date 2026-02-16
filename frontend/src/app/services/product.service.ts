@@ -21,7 +21,9 @@ export class ProductService {
     return this.http.get<ProductInfo[]>(this.API_URL);
   }
 
-
+  getProductById(productId: string): Observable<ProductInfo> {
+    return this.http.get<ProductInfo>(`${this.API_URL}/${productId}`);
+  }
   getSellerProducts(sellerId: string | null): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.API_URL}/all/${sellerId}`);
   }

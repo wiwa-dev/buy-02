@@ -1,23 +1,25 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Router } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { ProductService } from "../../services/product.service";
 import { AuthService } from "../../services/auth.service";
 import { ThemeService } from "../../services/theme.service";
-import { Product, ProductInfo, SellerInfo } from "../../models/product.model";
+import { FormsModule } from '@angular/forms';
+import {ProductInfo } from "../../models/product.model";
 import { User } from "../../models/user.model";
-import { DecodedToken } from "../../models/jwt.model";
-import { jwtDecode } from "jwt-decode";
 @Component({
   selector: "app-products-list",
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: "./products-list.component.html",
 })
 export class ProductsListComponent implements OnInit {
   productInfos: ProductInfo[] = [];
+  filteredProducts: ProductInfo[] = [];
+  query = '';
   loading = true;
   currentUser: User | null = null;
   isDarkMode = false;
+  searchQuery = '';
 
   private productService = inject(ProductService);
   private authService = inject(AuthService);
@@ -44,6 +46,7 @@ export class ProductsListComponent implements OnInit {
         console.log(ProductInfo);
 
         this.productInfos = ProductInfo;
+        this.filteredProducts = ProductInfo;
         // console.log(this.productInfos[0].medias[0]);
 
         this.loading = false;
@@ -65,6 +68,21 @@ export class ProductsListComponent implements OnInit {
     this.router.navigate(["/login"]);
   }
 
+  onSearch(): void {
+     this.query = this.searchQuery.toLowerCase() ;
+    if (!this.searchQuery.trim()) {
+      this.filteredProducts = this.productInfos;
+      return;
+    }
+
+    this.filteredProducts = this.productInfos.filter(productInfo =>
+      productInfo.product.name.toLowerCase().includes(this.query) ||
+      productInfo.product.description.toLowerCase().includes(this.query) ||
+      productInfo.seller.firstName.toLowerCase().includes(this.query) ||
+      productInfo.seller.lastName.toLowerCase().includes(this.query) ||
+      productInfo.seller.email.toLowerCase().includes(this.query)
+    );
+  }
   navigateToDashboard(): void {
     this.router.navigate(["/dashboard"]);
   }

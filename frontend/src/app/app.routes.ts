@@ -8,6 +8,7 @@ import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-la
 import { OverviewComponent } from './pages/dashboard/overview/overview.component';
 import { ProductsComponent } from './pages/dashboard/products/products.component';
 import { MediaComponent } from './pages/dashboard/media/media.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   {
     path: 'products',
     component: ProductsListComponent
+  },
+  {
+    path: 'product/:id',
+    component: ProductDetailComponent
   },
   {
     path: 'dashboard',
