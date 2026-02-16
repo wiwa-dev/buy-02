@@ -34,7 +34,8 @@ spring:
               - DELETE
               - PATCH
               - OPTIONS
-            allowedHeaders: "*"
+            allowedHeaders: 
+              - "*"
             allowCredentials: true
 
 
