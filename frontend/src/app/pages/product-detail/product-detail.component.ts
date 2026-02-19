@@ -39,7 +39,7 @@ export class ProductDetailComponent implements OnInit {
     this.productService.products$.subscribe({
       next: (products) => {
         console.log(products)
-        this.productInfo = products.filter(product => product.product.id == productId)[0]
+        this.productInfo = products.find(product => product.product.id == productId)
         this.loading = false;
       },
       error: (err) => {
