@@ -13,6 +13,7 @@ import { RegisterRequest, UserRole } from "../../models/user.model";
 import { environment } from "../../../environments/environement";
 import { HttpClient } from "@angular/common/http";
 import { ErrorService } from "../../services/error.service";
+import { ThemeService } from "../../services/theme.service";
 
 @Component({
   selector: "app-register",
@@ -28,12 +29,14 @@ export class RegisterComponent {
   previewUrl: string | null = null;
   cloudinaryResponse?: any;
   avatar = "";
+  isDarkMode = false;
 
   // ===== INJECTIONS =====
   private authService = inject(AuthService);
   private router = inject(Router);
   private http = inject(HttpClient);
   protected errorService = inject(ErrorService);
+  private themeService = inject(ThemeService)
 
   protected readonly form = new FormGroup({
     firstName: new FormControl("", [Validators.required]),
@@ -45,6 +48,12 @@ export class RegisterComponent {
     ]),
     role: new FormControl("CLIENT", [Validators.required]),
   });
+
+  ngOnInit(): void {
+    this.themeService.darkMode$.subscribe((isDark) => {
+      this.isDarkMode = isDark;
+    });
+  }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];

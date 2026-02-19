@@ -7,7 +7,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
-                Retour aux produits
+                Back to products
             </button>
         </div>
     </div>
@@ -16,10 +16,19 @@
     <div *ngIf="loading" class="flex items-center justify-center h-96">
         <div class="text-center">
             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p class="mt-4 text-gray-600 dark:text-gray-300">Chargement...</p>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">Loading...</p>
         </div>
     </div>
-
+    @if (!loading && !productInfo) {
+    <div class="text-center py-20">
+        <svg class="w-20 h-20 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+        </svg>
+        <h3 class="text-xl font-medium text-gray-900 dark:text-white mb-2">This product is not available</h3>
+    </div>
+    }
     <!-- Product Detail -->
     @if(productInfo && !loading){
     <div class="max-w-7xl mx-auto px-6 py-12">
@@ -35,7 +44,7 @@
                     }
                     @else{
                     <div class="text-gray-400">
-                        Pas d'image disponible
+                        No image available
                     </div>
                     }
 
@@ -71,9 +80,11 @@
                     @for(image of productInfo.medias; track $index){
                     <button (click)="selectImage($index)" [class.ring-2]="currentImageIndex === $index"
                         class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all"
-                        [class.border-blue-500]="currentImageIndex === $index" [class.border-gray-300]="currentImageIndex !== $index"
+                        [class.border-blue-500]="currentImageIndex === $index"
+                        [class.border-gray-300]="currentImageIndex !== $index"
                         [class.dark:border-gray-600]="currentImageIndex !== $index">
-                        <img [src]="image.imagePath" [alt]="'Thumbnail ' + ($index + 1)" class="w-full h-full object-cover">
+                        <img [src]="image.imagePath" [alt]="'Thumbnail ' + ($index + 1)"
+                            class="w-full h-full object-cover">
                     </button>
                     }
                 </div>
@@ -85,7 +96,7 @@
                 <!-- Title and Seller -->
                 <div>
                     <p class="text-blue-600 dark:text-blue-400 text-sm font-semibold mb-2">
-                        {{ productInfo.seller.firstName || 'Vendeur inconnu' }}
+                        {{ productInfo.seller.firstName || 'Unknown seller' }}
                     </p>
                     <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
                         {{ productInfo.product.name }}
@@ -120,7 +131,7 @@
                                 </path>
                             </svg>
                         </div>
-                        <span class="text-gray-600 dark:text-gray-300 text-sm">(128 avis)</span>
+                        <span class="text-gray-600 dark:text-gray-300 text-sm">(128 reviews)</span>
                     </div>
                 </div>
 
@@ -133,30 +144,34 @@
                         <span class="text-lg text-gray-500 dark:text-gray-400">HT</span>
                     </div>
                     <p class="text-sm text-gray-600 dark:text-gray-300">
-                        <span class="font-semibold">TVA incluse</span> • Frais de port : À calculer
+                        <span class="font-semibold">VAT included</span> • Shipping fees: To be calculated
                     </p>
                 </div>
 
                 <!-- Stock Status -->
                 <div class="flex items-center gap-3">
-                    <div [class.bg-green-100]="productInfo.product.quantity > 10" [class.dark:bg-green-900]="productInfo.product.quantity > 10"
-                        [class.bg-orange-100]="productInfo.product.quantity <= 10" [class.dark:bg-orange-900]="productInfo.product.quantity <= 10"
-                        class="px-4 py-2 rounded-lg">
-                        <p [class.text-green-800]="productInfo.product.quantity > 10" [class.dark:text-green-200]="productInfo.product.quantity > 10"
+                    <div [class.bg-green-100]="productInfo.product.quantity > 10"
+                        [class.dark:bg-green-900]="productInfo.product.quantity > 10"
+                        [class.bg-orange-100]="productInfo.product.quantity <= 10"
+                        [class.dark:bg-orange-900]="productInfo.product.quantity <= 10" class="px-4 py-2 rounded-lg">
+                        <p [class.text-green-800]="productInfo.product.quantity > 10"
+                            [class.dark:text-green-200]="productInfo.product.quantity > 10"
                             [class.text-orange-800]="productInfo.product.quantity <= 10"
-                            [class.dark:text-orange-200]="productInfo.product.quantity <= 10" class="text-sm font-semibold">
-                            <span *ngIf="productInfo.product.quantity > 10">{{ productInfo.product.quantity }} en stock</span>
+                            [class.dark:text-orange-200]="productInfo.product.quantity <= 10"
+                            class="text-sm font-semibold">
+                            <span *ngIf="productInfo.product.quantity > 10">{{ productInfo.product.quantity }} in
+                                stock</span>
                             <span *ngIf="productInfo.product.quantity <= 10 && productInfo.product.quantity > 0">
-                                Plus que {{ productInfo.product.quantity }} article(s)
+                                Only {{ productInfo.product.quantity }} item(s) left
                             </span>
-                            <span *ngIf="productInfo.product.quantity === 0">Rupture de stock</span>
+                            <span *ngIf="productInfo.product.quantity === 0">Out of stock</span>
                         </p>
                     </div>
                 </div>
 
                 <!-- Description -->
                 <div>
-                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Détails du produit</h2>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Product details</h2>
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
                         {{ productInfo.product.description }}
                     </p>
@@ -167,13 +182,14 @@
                 <!-- Actions -->
                 <div class="flex gap-4 pt-4">
                     <button (click)="addToCart()" [disabled]="productInfo.product.quantity === 0"
-                        [class.opacity-50]="productInfo.product.quantity === 0" [class.cursor-not-allowed]="productInfo.product.quantity === 0"
+                        [class.opacity-50]="productInfo.product.quantity === 0"
+                        [class.cursor-not-allowed]="productInfo.product.quantity === 0"
                         class="flex-1 bg-blue-600 hover:bg-blue-700 disabled:hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-                        Ajouter au panier
+                        Add to cart
                     </button>
                     <button
                         class="flex-1 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-6 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                        Favoris
+                        Favorites
                     </button>
                 </div>
             </div>

@@ -35,13 +35,13 @@ export class ProductsListComponent implements OnInit {
     this.themeService.darkMode$.subscribe((isDark) => {
       this.isDarkMode = isDark;
     });
-
+    this.productService.loadProducts();
     this.loadProducts();
   }
 
   loadProducts(): void {
     this.loading = true;
-    this.productService.getAllProducts().subscribe({
+    this.productService.products$.subscribe({
       next: (ProductInfo) => {
         console.log(ProductInfo);
 
@@ -50,6 +50,7 @@ export class ProductsListComponent implements OnInit {
         // console.log(this.productInfos[0].medias[0]);
 
         this.loading = false;
+        
       },
       error: (err) => {
         console.error(err);

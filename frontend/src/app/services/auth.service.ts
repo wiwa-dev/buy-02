@@ -12,6 +12,7 @@ import {
 } from "../models/user.model";
 import { environment } from "../../environments/environement";
 import { Router } from "@angular/router";
+import { ProductInfo } from "../models/product.model";
 
 @Injectable({
   providedIn: "root",

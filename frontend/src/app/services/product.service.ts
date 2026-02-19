@@ -1,6 +1,6 @@
 import { inject, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import {
   ProductInfo,
   Product,
@@ -16,19 +16,26 @@ export class ProductService {
   private readonly API_URL = `${environment.apiGateway}/products`;
   userId = "";
   private http = inject(HttpClient);
+  private productsSubject = new BehaviorSubject<ProductInfo[] | []>([]);
+  public products$ = this.productsSubject.asObservable();
 
   getAllProducts(): Observable<ProductInfo[]> {
     return this.http.get<ProductInfo[]>(this.API_URL);
   }
+  loadProducts(): void {
+    this.getAllProducts().subscribe(ProductInfo => {
+      this.productsSubject.next(ProductInfo);
+    });
+  }
 
-  getProductById(productId: string): Observable<ProductInfo> {
-    return this.http.get<ProductInfo>(`${this.API_URL}/${productId}`);
+  getProductById(productId: string): Observable<Product> {
+    return this.http.get<Product>(`${this.API_URL}/${productId}`);
   }
   getSellerProducts(sellerId: string | null): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.API_URL}/all/${sellerId}`);
   }
 
-  createProduct(product: CreateProductRequest,sellerId: string): Observable<Product> {
+  createProduct(product: CreateProductRequest, sellerId: string): Observable<Product> {
     return this.http.post<Product>(`${this.API_URL}/${sellerId}`, product);
   }
 
