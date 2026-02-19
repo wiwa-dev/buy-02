@@ -5,5 +5,5 @@ export const environment = {
     apiCloudinary: "https://api.cloudinary.com/v1_1/dkjehxae7/image/upload",
     avatarPreset: "avatars_preset",
     mediaPreset: "medias_preset",
-  }
+  },
 };
