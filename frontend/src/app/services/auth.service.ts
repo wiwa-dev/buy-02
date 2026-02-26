@@ -10,7 +10,7 @@ import {
   RegisterRequest,
   User,
 } from "../models/user.model";
-import { environment } from "../../environments/environement";
+import { environment } from "../../environments/environment";
 import { Router } from "@angular/router";
 import { ProductInfo } from "../models/product.model";
 
@@ -100,7 +100,7 @@ export class AuthService {
     }
     return null;
   }
-  
+
   // ✅ Méthode utile pour obtenir directement le sellerId
   getSellerId(): string | null {
     const payload = this.currentPayloadSubject.value;
@@ -131,7 +131,7 @@ export class AuthService {
     const userJson = localStorage.getItem(this.USER_KEY);
     const exp = localStorage.getItem(this.TOKEN_EXPIRES_IN);
 
-    console.log("user:", userJson ? JSON.parse(userJson) : null,Date.now(),exp);
+    console.log("user:", userJson ? JSON.parse(userJson) : null, Date.now(), exp);
     return userJson ? JSON.parse(userJson) : null;
   }
 }

@@ -1,0 +1,17 @@
+spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+  application:
+    name: order-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_INSTANCE_HOSTNAME:http://localhost}:8761/eureka/
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    com.buy01.order: DEBUG

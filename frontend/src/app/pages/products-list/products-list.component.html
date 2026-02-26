@@ -4,20 +4,21 @@
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center gap-3">
           <a href="/">
-            <h1 class="text-2xl font-bold text-primary-600 dark:text-primary-400">E-Shop Sonar test</h1>
+            <h1 class="text-2xl font-bold text-primary-600 dark:text-primary-400">E-Shop</h1>
           </a>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <!-- Theme toggle -->
           <button (click)="toggleTheme()"
             class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors">
             @if (!isDarkMode) {
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
             </svg>
             } @else {
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
               </path>
@@ -25,30 +26,55 @@
             }
           </button>
 
+          <!-- Cart Button (always visible) -->
+          <button (click)="navigateToCart()" id="cart-btn"
+            class="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+              </path>
+            </svg>
+            <span *ngIf="cartCount > 0"
+              class="absolute -top-1 -right-1 w-5 h-5 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded-full animate-bounce">
+              {{ cartCount > 9 ? '9+' : cartCount }}
+            </span>
+          </button>
+
           @if (currentUser) {
-          <div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-2 pl-3 border-l border-gray-200 dark:border-gray-700">
             @if (currentUser.role === 'SELLER') {
             <button (click)="navigateToDashboard()"
-              class="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400">
+              class="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
               Dashboard
             </button>
             }
-            <div class="flex items-center gap-2">
+            @if (currentUser.role === 'CLIENT') {
+            <button (click)="navigateToOrders()"
+              class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              My Orders
+            </button>
+            }
+            <!-- Avatar + Profile link -->
+            <button (click)="navigateToProfile()"
+              class="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
               <div class="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
                 <span class="text-primary-600 dark:text-primary-400 text-sm font-semibold">
                   {{ currentUser.firstName?.charAt(0) }}{{ currentUser.lastName?.charAt(0) }}
                 </span>
               </div>
-              <button (click)="logout()"
-                class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-                Logout
-              </button>
-            </div>
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300 hidden sm:block">
+                {{ currentUser.firstName }}
+              </span>
+            </button>
+            <button (click)="logout()"
+              class="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              Logout
+            </button>
           </div>
           }
 
           @if (!currentUser) {
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 pl-3 border-l border-gray-200 dark:border-gray-700">
             <a href="/login"
               class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
               Login

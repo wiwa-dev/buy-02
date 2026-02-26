@@ -8,50 +8,26 @@
         Manage your product inventory
       </p>
     </div>
-    <button
-      (click)="openCreateModal()"
-      class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
-    >
-      <svg
-        class="w-5 h-5 mr-2"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M12 4v16m8-8H4"
-        ></path>
+    <button (click)="openCreateModal()"
+      class="inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
       </svg>
       Add Product
     </button>
   </div>
 
-  <div
-    class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700"
-  >
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
     @if (loading) {
     <div class="p-12 text-center">
-      <div
-        class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"
-      ></div>
+      <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
     </div>
     } @if (!loading && products.length === 0) {
     <div class="p-12 text-center">
-      <svg
-        class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-        ></path>
+      <svg class="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600 mb-4" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
       </svg>
       <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">
         No products yet
@@ -66,28 +42,23 @@
         <thead class="bg-gray-50 dark:bg-gray-700/50">
           <tr>
             <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Product
             </th>
             <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Price
             </th>
             <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Stock
             </th>
             <th
-              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
+              class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Images
             </th>
             <th
-              class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-            >
+              class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -99,9 +70,7 @@
               <div class="text-sm font-medium text-gray-900 dark:text-white">
                 {{ product.name }}
               </div>
-              <div
-                class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-md"
-              >
+              <div class="text-sm text-gray-500 dark:text-gray-400 truncate max-w-md">
                 {{ product.description }}
               </div>
             </td>
@@ -111,68 +80,48 @@
               </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <span
-                [class]="
-                  product.quantity > 0
-                    ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
-                    : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
-                "
-                class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full"
-              >
-                {{ product.quantity }}
-              </span>
+              <button (click)="openStockModal(product)" title="Click to update stock"
+                class="group flex items-center gap-1.5">
+                <span [class]="
+                    product.quantity > 0
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                      : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
+                  "
+                  class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full group-hover:ring-2 group-hover:ring-offset-1 group-hover:ring-blue-400 transition-all">
+                  {{ product.quantity }}
+                </span>
+                <svg class="w-3.5 h-3.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" fill="none"
+                  stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536M4 20l4.5-1 10.268-10.268a2.5 2.5 0 10-3.536-3.536L5 15.464 4 20z">
+                  </path>
+                </svg>
+              </button>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <button
-                (click)="openUploadModal(product)"
-                class="text-sm flex text-primary-600 hover:text-primary-700 dark:text-primary-400 font-medium"
-              >
-             
+              <button (click)="openUploadModal(product)"
+                class="text-sm flex text-primary-600 hover:text-primary-700 dark:text-primary-400 font-medium">
+
                 {{ product.medias ? product.medias.length : 0 }}
                 images
               </button>
             </td>
-            <td
-              class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-4"
-            >
-              <button
-                (click)="openEditModal(product)"
-                class="text-primary-600 hover:text-primary-900 dark:text-primary-400"
-                aria-label="Edit product"
-                title="Edit"
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536M4 20l4.5-1 10.268-10.268a2.5 2.5 0 10-3.536-3.536L5 15.464 4 20z"
-                  ></path>
+            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-4">
+              <button (click)="openEditModal(product)"
+                class="text-primary-600 hover:text-primary-900 dark:text-primary-400" aria-label="Edit product"
+                title="Edit">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536M4 20l4.5-1 10.268-10.268a2.5 2.5 0 10-3.536-3.536L5 15.464 4 20z">
+                  </path>
                 </svg>
               </button>
-              <button
-                (click)="deleteProduct(product)"
-                class="text-red-600 hover:text-red-900 dark:text-red-400"
-                aria-label="Delete product"
-                title="Delete"
-              >
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  ></path>
+              <button (click)="deleteProduct(product)" class="text-red-600 hover:text-red-900 dark:text-red-400"
+                aria-label="Delete product" title="Delete">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
                 </svg>
               </button>
             </td>
@@ -186,12 +135,8 @@
 </div>
 
 @if (showModal) {
-<div
-  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
->
-  <div
-    class="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-  >
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
     <div class="p-6 border-b border-gray-200 dark:border-gray-700">
       <h2 class="text-xl font-bold text-gray-900 dark:text-white">
         {{ isEditMode ? "Edit Product" : "Create Product" }}
@@ -200,18 +145,12 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-6 space-y-4">
       <div>
-        <label
-          class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Product Name
         </label>
-        <input
-          type="text"
-          id="name"
-          formControlName="name"
+        <input type="text" id="name" formControlName="name"
           class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          [class.border-red-500]="errorService.hasError(form, 'name')"
-        />
+          [class.border-red-500]="errorService.hasError(form, 'name')" />
         @if(errorService.hasError(form,"name")){
         <p class="mt-1 text-sm text-red-600 dark:text-red-400">
           {{ errorService.getErrorMessage(form, "name") }}
@@ -220,18 +159,12 @@
       </div>
 
       <div>
-        <label
-          class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-        >
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
           Description
         </label>
-        <textarea
-          formControlName="description"
-          id="description"
-          rows="4"
+        <textarea formControlName="description" id="description" rows="4"
           class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-          [class.border-red-500]="errorService.hasError(form, 'description')"
-        ></textarea>
+          [class.border-red-500]="errorService.hasError(form, 'description')"></textarea>
         @if(errorService.hasError(form,"description")){
         <p class="mt-1 text-sm text-red-600 dark:text-red-400">
           {{ errorService.getErrorMessage(form, "description") }}
@@ -241,19 +174,12 @@
 
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Price ($)
           </label>
-          <input
-            type="number"
-            id="price"
-            formControlName="price"
-            step="0.01"
+          <input type="number" id="price" formControlName="price" step="0.01"
             class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            [class.border-red-500]="errorService.hasError(form, 'price')"
-          />
+            [class.border-red-500]="errorService.hasError(form, 'price')" />
           @if(errorService.hasError(form,"price")){
           <p class="mt-1 text-sm text-red-600 dark:text-red-400">
             {{ errorService.getErrorMessage(form, "price") }}
@@ -262,18 +188,12 @@
         </div>
 
         <div>
-          <label
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-          >
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             Stock
           </label>
-          <input
-            type="number"
-            id="quantity"
-            formControlName="quantity"
+          <input type="number" id="quantity" formControlName="quantity"
             class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            [class.border-red-500]="errorService.hasError(form, 'quantity')"
-          />
+            [class.border-red-500]="errorService.hasError(form, 'quantity')" />
           @if(errorService.hasError(form,"quantity")){
           <p class="mt-1 text-sm text-red-600 dark:text-red-400">
             {{ errorService.getErrorMessage(form, "quantity") }}
@@ -281,37 +201,25 @@
           }
         </div>
       </div>
-      <div
-        [class]="error || succes ? 'flex justify-between' : 'flex justify-end'"
-      >
+      <div [class]="error || succes ? 'flex justify-between' : 'flex justify-end'">
         @if(error){
 
-        <div
-          class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm"
-        >
+        <div class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
           {{ error }}
         </div>
         } @if(succes){
 
-        <div
-          class="bg-green-50 dark:bg-red-900/20 text-green-600 dark:text-green-400 px-4 py-3 rounded-lg text-sm"
-        >
+        <div class="bg-green-50 dark:bg-red-900/20 text-green-600 dark:text-green-400 px-4 py-3 rounded-lg text-sm">
           {{ succes }}
         </div>
         }
         <div class="flex justify-end gap-3 pt-4">
-          <button
-            type="button"
-            (click)="closeModal()"
-            class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium"
-          >
+          <button type="button" (click)="closeModal()"
+            class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium">
             Cancel
           </button>
-          <button
-            type="submit"
-            [disabled]="form.invalid || succes"
-            class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button type="submit" [disabled]="form.invalid || succes"
+            class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed">
             {{ isEditMode ? "Update" : "Create" }}
           </button>
         </div>
@@ -322,172 +230,160 @@
 }
 
 @if (showUploadModal) {
-  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-    <div
-      class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-lg flex flex-col max-h-[90vh]"
-    >
-      <!-- Header -->
-      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-        <h2 class="text-lg font-bold text-gray-900 dark:text-white">
-          Upload Images for {{ currentProductForUpload?.name }}
-        </h2>
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-lg flex flex-col max-h-[90vh]">
+    <!-- Header -->
+    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+      <h2 class="text-lg font-bold text-gray-900 dark:text-white">
+        Upload Images for {{ currentProductForUpload?.name }}
+      </h2>
+    </div>
+
+    <!-- Body scrollable -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      @if (uploadError) {
+      <div class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
+        {{ uploadError }}
       </div>
-  
-      <!-- Body scrollable -->
-      <div class="flex-1 overflow-y-auto p-4 space-y-4">
-        @if (uploadError) {
-        <div
-          class="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm"
-        >
-          {{ uploadError }}
-        </div>
-        }
-  
-        <!-- Zone de sélection -->
-        @if(previewUrls.length == 0) {
-        <div
-          class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center"
-        >
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            (change)="onFilesSelected($event)"
-            class="hidden"
-            #uploadInput
-          />
-          <button
-            type="button"
-            (click)="uploadInput.click()"
-            class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600"
-          >
-            <svg
-              class="w-5 h-5 mr-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              ></path>
+      }
+
+      <!-- Zone de sélection -->
+      @if(previewUrls.length == 0) {
+      <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+        <input type="file" accept="image/*" multiple (change)="onFilesSelected($event)" class="hidden" #uploadInput />
+        <button type="button" (click)="uploadInput.click()"
+          class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+            </path>
+          </svg>
+          Choose Images
+        </button>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          Max 2MB per file, JPG/PNG/GIF/WebP
+        </p>
+      </div>
+      }
+
+      <!-- Zone de preview scrollable -->
+      @if(previewUrls.length > 0) {
+      <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto max-h-64 p-2 border rounded-lg">
+        @for(url of previewUrls; track url) {
+        <div class="relative group">
+          <img [src]="url" alt="Avatar preview"
+            class="w-full h-24 object-cover rounded-lg border border-gray-300 dark:border-gray-600" />
+          <button type="button" (click)="removeAvatar(url)"
+            class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-lg">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-            Choose Images
           </button>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
-            Max 2MB per file, JPG/PNG/GIF/WebP
-          </p>
-        </div>
-        }
-  
-        <!-- Zone de preview scrollable -->
-        @if(previewUrls.length > 0) {
-        <div
-          class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto max-h-64 p-2 border rounded-lg"
-        >
-          @for(url of previewUrls; track url) {
-          <div class="relative group">
-            <img
-              [src]="url"
-              alt="Avatar preview"
-              class="w-full h-24 object-cover rounded-lg border border-gray-300 dark:border-gray-600"
-            />
-            <button
-              type="button"
-              (click)="removeAvatar(url)"
-              class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-lg"
-            >
-              <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            </button>
-          </div>
-          }
-        </div>
-        }
-  
-        <!-- Liste des fichiers -->
-        @if (selectedFiles.length > 0) {
-        <div>
-          <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
-            Selected Files:
-          </p>
-          <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mt-1">
-            @for (file of selectedFiles; track file.name) {
-            <li class="flex items-center gap-2">
-              <svg
-                class="w-4 h-4 text-green-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
-              {{ file.name }} ({{ getFileSize(file.size) }})
-            </li>
-            }
-          </ul>
         </div>
         }
       </div>
-  
-      <!-- Footer (fixé en bas du modal) -->
-      <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
-        <button
-          type="button"
-          (click)="closeUploadModal()"
-          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium"
-        >
+      }
+
+      <!-- Liste des fichiers -->
+      @if (selectedFiles.length > 0) {
+      <div>
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Selected Files:
+        </p>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1 mt-1">
+          @for (file of selectedFiles; track file.name) {
+          <li class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            {{ file.name }} ({{ getFileSize(file.size) }})
+          </li>
+          }
+        </ul>
+      </div>
+      }
+    </div>
+
+    <!-- Footer (fixé en bas du modal) -->
+    <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+      <button type="button" (click)="closeUploadModal()"
+        class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium">
+        Cancel
+      </button>
+      <button type="button" (click)="uploadMedia()" [disabled]="selectedFiles.length === 0 || loadingUpload"
+        class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center">
+        @if(!loadingUpload){ Upload } @if(loadingUpload){
+        <svg class="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle>
+          <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+          </path>
+        </svg>
+        Uploading...
+        }
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+
+<!-- Quick Stock Update Modal -->
+@if (showStockModal && stockProduct) {
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-sm">
+    <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+      <h2 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+        <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+        </svg>
+        Update Stock
+      </h2>
+      <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ stockProduct.name }}</p>
+    </div>
+
+    <div class="p-5 space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          New Quantity
+        </label>
+        <div class="flex items-center gap-3">
+          <button type="button" (click)="newStockValue = newStockValue > 0 ? newStockValue - 1 : 0"
+            class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 font-bold text-lg transition-colors">
+            −
+          </button>
+          <input type="number" id="new-stock" [(ngModel)]="newStockValue" min="0"
+            class="flex-1 text-center px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 text-lg font-bold">
+          <button type="button" (click)="newStockValue = newStockValue + 1"
+            class="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600 font-bold text-lg transition-colors">
+            +
+          </button>
+        </div>
+        <p class="text-xs text-gray-400 dark:text-gray-500 mt-2 text-center">
+          Current stock: <strong>{{ stockProduct.quantity }}</strong> units
+        </p>
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button type="button" (click)="closeStockModal()"
+          class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium transition-colors">
           Cancel
         </button>
-        <button
-          type="button"
-          (click)="uploadMedia()"
-          [disabled]="selectedFiles.length === 0 || loadingUpload"
-          class="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
-        >
-          @if(!loadingUpload){ Upload } @if(loadingUpload){
-          <svg
-            class="animate-spin h-5 w-5 mr-2"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-              fill="none"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
+        <button type="button" (click)="saveStock()" [disabled]="stockUpdating || newStockValue < 0"
+          class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+          @if (stockUpdating) {
+          <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
           </svg>
-          Uploading...
+          Saving...
+          } @else {
+          Save Stock
           }
         </button>
       </div>
     </div>
   </div>
-  }
-  
+</div>
+}

@@ -10,7 +10,7 @@ import {
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { RegisterRequest, UserRole } from "../../models/user.model";
-import { environment } from "../../../environments/environement";
+import { environment } from "../../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { ErrorService } from "../../services/error.service";
 import { ThemeService } from "../../services/theme.service";
@@ -76,7 +76,7 @@ export class RegisterComponent {
       reader.onload = () => {
         // console.log(reader.result);
         this.previewUrl = reader.result as string;
-        
+
       };
 
       reader.readAsDataURL(file);
@@ -144,7 +144,7 @@ export class RegisterComponent {
     }
   }
 
-  
+
   hasError(field: string): boolean {
     const control = this.form.get(field);
     return !!(control && control.invalid && control.touched);

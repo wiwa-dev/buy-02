@@ -5,7 +5,7 @@ import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { ThemeService } from '../../services/theme.service';
-import { ProductsListComponent } from '../products-list/products-list.component';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-detail.component',
@@ -18,12 +18,15 @@ export class ProductDetailComponent implements OnInit {
   currentImageIndex = 0;
   loading = true;
   isDarkMode = false;
+  addedToCart = false;
+  selectedQuantity = 1;
 
   private productService = inject(ProductService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private authService = inject(AuthService);
-  private themeService = inject(ThemeService)
+  private themeService = inject(ThemeService);
+  private cartService = inject(CartService);
 
   ngOnInit(): void {
     this.themeService.darkMode$.subscribe((isDark) => {
@@ -38,7 +41,6 @@ export class ProductDetailComponent implements OnInit {
   loadProduct(productId: string): void {
     this.productService.products$.subscribe({
       next: (products) => {
-        console.log(products)
         this.productInfo = products.find(product => product.product.id == productId) ?? null;
         this.loading = false;
       },
@@ -47,8 +49,7 @@ export class ProductDetailComponent implements OnInit {
         this.loading = false;
         err.status == 401 ? this.authService.logout() : null;
       },
-
-    })
+    });
   }
 
   nextImage() {
@@ -62,17 +63,39 @@ export class ProductDetailComponent implements OnInit {
       this.currentImageIndex = (this.currentImageIndex - 1 + this.productInfo.medias.length) % this.productInfo.medias.length;
     }
   }
+
   selectImage(index: number): void {
-    this.currentImageIndex = index
+    this.currentImageIndex = index;
   }
 
   addToCart(): void {
-    alert(`"${this.productInfo?.product.name}" ajouté au panier !`);
+    if (!this.productInfo) return;
+
+    const imageUrl = this.productInfo.medias?.[0]?.imagePath;
+
+    this.cartService.addItem({
+      productId: this.productInfo.product.id,
+      productName: this.productInfo.product.name,
+      sellerId: this.productInfo.seller.id,   // linked to seller for stats
+      price: this.productInfo.product.price,
+      quantity: this.selectedQuantity,
+      imageUrl: imageUrl,
+      maxQuantity: this.productInfo.product.quantity
+    });
+
+    this.addedToCart = true;
+    setTimeout(() => (this.addedToCart = false), 2500);
   }
+
+  goToCart(): void {
+    this.router.navigate(['/cart']);
+  }
+
   goBack(): void {
     this.router.navigate(['/products']);
   }
 }
+
 
 
 

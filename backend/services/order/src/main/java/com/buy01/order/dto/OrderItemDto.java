@@ -1,0 +1,31 @@
+package com.buy01.order.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrderItemDto {
+
+    @NotBlank(message = "Product ID is required")
+    private String productId;
+
+    @NotBlank(message = "Product name is required")
+    private String productName;
+
+    private String sellerId; // ID du vendeur (optionnel mais recommandé)
+
+    @NotNull(message = "Price is required")
+    @Min(value = 0, message = "Price must be positive")
+    private Double price;
+
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    private int quantity;
+}

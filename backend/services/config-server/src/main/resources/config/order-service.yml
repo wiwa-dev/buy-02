@@ -1,0 +1,30 @@
+spring:
+  data:
+    mongodb:
+      host: ${SPRING_DATA_MONGODB_HOST:localhost}
+      username: wiwadev
+      password: wiwadev
+      port: ${SPRING_DATA_MONGODB_PORT:27018}
+      database: order_db
+      authentication-database: admin
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+# JWT — même secret que les autres services
+jwt:
+  secret: 0smkgpTVAhXxHq1lZEtvEySlVBr6U0OMN0NmLjWmJNxnTAsQaGPJ0AqsMVoQhrw9
+  expiration: 86400000
+
+server:
+  port: 3004
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}
+    instance-id: ${spring.application.name}:${server.port}
+
+application:
+  config:
+    product-url: https://${GATEWAY_HOSTNAME:localhost}:8222/api/v1/products

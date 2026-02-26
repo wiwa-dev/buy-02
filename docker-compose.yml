@@ -1,6 +1,5 @@
 services:
 
-  
   # =======================
   # 🧠 Config Server
   # =======================
@@ -93,6 +92,22 @@ services:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
       - SPRING_DATA_MONGODB_HOST=mongodb
       - GATEWAY_HOSTNAME=gateway
+      - SPRING_DATA_MONGODB_PORT=27017
+    networks:
+      - microservices-net
+
+  # =======================
+  # 📦 Order Service
+  # =======================
+  order-service:
+    image: wiwadev01/order-service:latest
+    container_name: order_service
+    depends_on:
+      - config-server
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_INSTANCE_HOSTNAME=http://discovery
+      - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_PORT=27017
     networks:
       - microservices-net

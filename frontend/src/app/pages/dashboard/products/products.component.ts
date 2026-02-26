@@ -15,14 +15,14 @@ import {
   UpdateProductRequest,
 } from "../../../models/product.model";
 import { AuthService } from "../../../services/auth.service";
-import {} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { ErrorService } from "../../../services/error.service";
 import { BehaviorSubject } from "rxjs";
 import { Media } from "../../../models/media.model";
 
 @Component({
   selector: "app-products",
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: "./products.component.html",
 })
 export class ProductsComponent implements OnInit {
@@ -41,6 +41,11 @@ export class ProductsComponent implements OnInit {
   uploadError = "";
   currentProductForUpload: Product | null = null;
   userId!: string;
+  // Quick stock update
+  showStockModal = false;
+  stockProduct: Product | null = null;
+  newStockValue = 0;
+  stockUpdating = false;
 
   private productService = inject(ProductService);
   private mediaService = inject(MediaService);
@@ -74,7 +79,7 @@ export class ProductsComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);     
+        console.log(err);
         this.loading = false;
         err.status == 401 ? this.authService.logout() : null;
       },
@@ -120,7 +125,7 @@ export class ProductsComponent implements OnInit {
               this.loadProducts(this.userId);
               this.closeModal();
             },
-            error:(err)=>{
+            error: (err) => {
               err.status == 401 ? this.authService.logout() : null;
             }
           });
@@ -136,7 +141,7 @@ export class ProductsComponent implements OnInit {
                 this.closeModal();
               }, 3000);
             },
-            error:(err)=>{
+            error: (err) => {
               err.status == 401 ? this.authService.logout() : null;
               console.log(err);
               this.error = this.errorService.getErrorFromStatus(err);
@@ -158,6 +163,34 @@ export class ProductsComponent implements OnInit {
         },
       });
     }
+  }
+
+  openStockModal(product: Product): void {
+    this.stockProduct = product;
+    this.newStockValue = product.quantity;
+    this.showStockModal = true;
+  }
+
+  closeStockModal(): void {
+    this.showStockModal = false;
+    this.stockProduct = null;
+    this.stockUpdating = false;
+  }
+
+  saveStock(): void {
+    if (!this.stockProduct || this.newStockValue < 0) return;
+    this.stockUpdating = true;
+    this.productService.updateStock(this.stockProduct.id, this.newStockValue).subscribe({
+      next: (updated) => {
+        this.products = this.products.map(p => p.id === updated.id ? updated : p);
+        this.stockUpdating = false;
+        this.closeStockModal();
+      },
+      error: (err) => {
+        console.error(err);
+        this.stockUpdating = false;
+      }
+    });
   }
 
   openUploadModal(product: Product): void {
@@ -214,7 +247,7 @@ export class ProductsComponent implements OnInit {
           next: (response) => {
             console.log("✅ Fichier enregistré avec succès :", response);
           },
-          error:(err)=>{
+          error: (err) => {
             err.status == 401 ? this.authService.logout() : null;
             console.log("❌ Erreur pendant upload/enregistrement :", err);
             this.uploadError = err.error?.message || "Upload failed";

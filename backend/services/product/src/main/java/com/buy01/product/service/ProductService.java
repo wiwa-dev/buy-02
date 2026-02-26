@@ -9,7 +9,6 @@ import com.buy01.product.model.Product;
 import java.util.List;
 import java.util.Optional;
 
-
 // test
 @Service
 @RequiredArgsConstructor
@@ -42,5 +41,33 @@ public class ProductService {
 
     public Boolean existsByProductId(String productId) {
         return productRepository.findById(productId).isPresent();
+    }
+
+    /**
+     * Decrement product stock by a given quantity (called when order is DELIVERED).
+     * Throws IllegalStateException if stock is insufficient.
+     */
+    public Product decrementStock(String productId, int quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
+
+        int newQty = product.getQuantity() - quantity;
+        if (newQty < 0)
+            newQty = 0; // floor at 0 to avoid negative stock
+        product.setQuantity(newQty);
+        return productRepository.save(product);
+    }
+
+    /**
+     * Update stock to an absolute value (seller replenishment).
+     */
+    public Product updateStock(String productId, int newQuantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found: " + productId));
+
+        if (newQuantity < 0)
+            throw new IllegalArgumentException("Quantity cannot be negative");
+        product.setQuantity(newQuantity);
+        return productRepository.save(product);
     }
 }

@@ -20,6 +20,11 @@ spring:
           uri: lb://MEDIA-SERVICE
           predicates:
             - Path=/api/v1/medias/**
+        ################------ORDER---------################
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/v1/orders/**
 
       globalcors:
         add-to-simple-url-handler-mapping: true
@@ -27,6 +32,7 @@ spring:
           '[/**]':
             allowedOrigins:
               - "https://www.buy01.site"
+              - "http://localhost:4200"
             allowedMethods:
               - GET
               - POST
@@ -42,7 +48,7 @@ spring:
 server:
   port: 8222
   ssl:
-    enabled: true
+    enabled: false
     key-store: classpath:keystore/keystore.p12
     key-store-password: Dinamo22**
     key-store-type: PKCS12

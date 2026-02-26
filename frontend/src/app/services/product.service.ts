@@ -7,7 +7,7 @@ import {
   CreateProductRequest,
   UpdateProductRequest,
 } from "../models/product.model";
-import { environment } from "../../environments/environement";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
@@ -48,5 +48,10 @@ export class ProductService {
 
   deleteProduct(producId: string): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${producId}`);
+  }
+
+  /** Quick stock update — PATCH /products/{id}/stock  { quantity: N } */
+  updateStock(productId: string, quantity: number): Observable<Product> {
+    return this.http.patch<Product>(`${this.API_URL}/${productId}/stock`, { quantity });
   }
 }

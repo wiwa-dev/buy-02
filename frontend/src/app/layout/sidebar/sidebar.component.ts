@@ -33,6 +33,12 @@ export class SidebarComponent implements OnInit {
       route: "/dashboard/media",
       active: false,
     },
+    {
+      label: "Orders",
+      icon: "orders",
+      route: "/dashboard/orders",
+      active: false,
+    },
   ];
 
   private authService = inject(AuthService);

@@ -4,9 +4,11 @@ import { Router, RouterModule } from "@angular/router";
 import { ProductService } from "../../services/product.service";
 import { AuthService } from "../../services/auth.service";
 import { ThemeService } from "../../services/theme.service";
+import { CartService } from "../../services/cart.service";
 import { FormsModule } from '@angular/forms';
-import {ProductInfo } from "../../models/product.model";
+import { ProductInfo } from "../../models/product.model";
 import { User } from "../../models/user.model";
+
 @Component({
   selector: "app-products-list",
   imports: [CommonModule, FormsModule, RouterModule],
@@ -20,14 +22,15 @@ export class ProductsListComponent implements OnInit {
   currentUser: User | null = null;
   isDarkMode = false;
   searchQuery = '';
+  cartCount = 0;
 
   private productService = inject(ProductService);
   private authService = inject(AuthService);
   private themeService = inject(ThemeService);
+  private cartService = inject(CartService);
   private router = inject(Router);
 
   ngOnInit(): void {
-    
     this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
     });
@@ -35,6 +38,11 @@ export class ProductsListComponent implements OnInit {
     this.themeService.darkMode$.subscribe((isDark) => {
       this.isDarkMode = isDark;
     });
+
+    this.cartService.cart$.subscribe(() => {
+      this.cartCount = this.cartService.getItemCount();
+    });
+
     this.productService.loadProducts();
     this.loadProducts();
   }
@@ -43,14 +51,9 @@ export class ProductsListComponent implements OnInit {
     this.loading = true;
     this.productService.products$.subscribe({
       next: (ProductInfo) => {
-        console.log(ProductInfo);
-
         this.productInfos = ProductInfo;
         this.filteredProducts = ProductInfo;
-        // console.log(this.productInfos[0].medias[0]);
-
         this.loading = false;
-        
       },
       error: (err) => {
         console.error(err);
@@ -70,7 +73,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   onSearch(): void {
-     this.query = this.searchQuery.toLowerCase() ;
+    this.query = this.searchQuery.toLowerCase();
     if (!this.searchQuery.trim()) {
       this.filteredProducts = this.productInfos;
       return;
@@ -84,7 +87,21 @@ export class ProductsListComponent implements OnInit {
       productInfo.seller.email.toLowerCase().includes(this.query)
     );
   }
+
   navigateToDashboard(): void {
     this.router.navigate(["/dashboard"]);
   }
+
+  navigateToCart(): void {
+    this.router.navigate(["/cart"]);
+  }
+
+  navigateToOrders(): void {
+    this.router.navigate(["/orders"]);
+  }
+
+  navigateToProfile(): void {
+    this.router.navigate(["/profile"]);
+  }
 }
+

@@ -1,55 +1,71 @@
 #### Functional
 
-##### Download the project and trigger a Jenkins build. Observe if the pipeline runs as expected.
+##### Verify that the necessary tables, fields, relations are added.
 
-###### Does the pipeline initiate and run successfully from start to finish?
+###### Has the database design been correctly implemented?
 
-##### Trigger some intentional build errors and observe Jenkins' response.
+###### Have the students added new relationships and have they used them correctly?
 
-###### Does Jenkins respond appropriately to build errors?
+###### Did the students convince you with their additions to the database?
 
-##### Examine the automated testing step.
+##### Review the project repository to check for PRs and code reviews.
 
-###### Are tests run automatically during the pipeline execution? Does the pipeline halt on test failure?
+###### Are developers following a collaborative development process with PRs and code reviews?
 
-##### Make a minor change in the source code, commit, and push. Observe if the pipeline is triggered automatically.
+##### Check the implementation of Orders MicroService, User Profile, Search and Filtering, and Shopping Cart functionalities.
 
-###### Does a new commit and push automatically trigger the Jenkins pipeline?
+###### Are the implemented functionalities consistent with the project instructions?
 
-##### Check the deployment process.
+###### Are the implemented functionalities clean and do they not pop up any errors or warnings in both back and front end?
 
-###### Is the application deployed automatically after a successful build? Is there a rollback strategy in place?
+##### Add products to the shopping cart and refresh the page.
 
-#### Security
+###### Are the added products still in the shopping cart with the selected quantities?
 
-##### Examine the permissions on the Jenkins dashboard.
+##### Utilize SonarQube to assess code quality and check for improvements based on SonarQube feedback.
 
-###### Are permissions set appropriately to prevent unauthorized access or changes?
+###### Are code quality issues identified by SonarQube being addressed and fixed?
 
-##### Review how sensitive data (like API keys, passwords) is managed in Jenkins.
+##### Review the user interface to ensure it's user-friendly and responsive.
 
-###### Is sensitive data secured using Jenkins secrets or environment variables?
+###### Does the application provide a seamless and responsive user experience?
 
-#### Code Quality and Standards
+##### Check if proper error handling and validation mechanisms are in place.
 
-##### Examine the Jenkinsfile or the build configuration.
+###### Are user interactions handled gracefully with appropriate error messages?
 
-###### Is the code/script well-organized and understandable? Are there any best practices being ignored?
+##### Verify the implementation of security measures as specified in the project instructions.
 
-##### Look into the test report formats and outputs.
+###### Are security measures consistently applied throughout the application?
 
-###### Are test reports clear, comprehensive, and stored for future reference?
+#### Collaboration and Development Process
 
-##### Check for notifications setup.
+##### Check the repository's PR history and comments to ensure code reviews are conducted.
 
-###### Are notifications triggered on build and deployment events? Are they informative?
+###### Are code reviews being performed for each PR?
+
+##### Inspect the CI/CD pipeline configuration with Jenkins to ensure automated builds, tests, and deployments.
+
+###### Is the CI/CD pipeline correctly set up and being utilized for PRs?
+
+##### Examine the repository log and PR merges to ensure that branches are being merged as instructed.
+
+###### Are branches merged correctly, and is the main codebase up-to-date?
+
+##### Run a full test of the application to assess functionality and identify any issues.
+
+###### Does the application pass a comprehensive test to ensure that all new features work as expected?
+
+##### Inspect the codebase for unit tests related to different parts of the application.
+
+###### Are there unit tests in place for critical parts of the application?
 
 #### Bonus
 
-##### Examine if parameterized builds are implemented.
+##### Verify if the wishlist feature, if implemented, functions correctly.
 
-###### +Are there options for customizing the build run with different parameters?
+###### Is the wishlist feature functioning as expected?
 
-##### Examine the distributed builds (if implemented).
+##### Check if different payment methods, if implemented, work as intended.
 
-###### +Are multiple agents utilized effectively for distributed builds?
+###### Are the implemented payment methods functioning correctly?

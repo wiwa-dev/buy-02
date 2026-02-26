@@ -9,6 +9,10 @@ import { OverviewComponent } from './pages/dashboard/overview/overview.component
 import { ProductsComponent } from './pages/dashboard/products/products.component';
 import { MediaComponent } from './pages/dashboard/media/media.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SellerOrdersComponent } from './pages/dashboard/seller-orders/seller-orders.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +37,20 @@ export const routes: Routes = [
     component: ProductDetailComponent
   },
   {
+    path: 'cart',
+    component: CartComponent
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'dashboard',
     component: DashboardLayoutComponent,
     canActivate: [AuthGuard, SellerGuard],
@@ -48,6 +66,10 @@ export const routes: Routes = [
       {
         path: 'media',
         component: MediaComponent
+      },
+      {
+        path: 'orders',
+        component: SellerOrdersComponent
       }
     ]
   },
@@ -56,3 +78,4 @@ export const routes: Routes = [
     redirectTo: '/products'
   }
 ];
+

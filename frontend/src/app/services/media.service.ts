@@ -6,7 +6,7 @@ import {
   MediaRequeste,
   UploadMediaResponse,
 } from "../models/media.model";
-import { environment } from "../../environments/environement";
+import { environment } from "../../environments/environment";
 import { Product } from "../models/product.model";
 
 @Injectable({
