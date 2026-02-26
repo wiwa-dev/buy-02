@@ -107,6 +107,7 @@ services:
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
       - EUREKA_INSTANCE_HOSTNAME=http://discovery
+      - GATEWAY_HOSTNAME=gateway
       - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_PORT=27017
     networks:

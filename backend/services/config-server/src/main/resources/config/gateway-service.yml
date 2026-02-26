@@ -48,7 +48,7 @@ spring:
 server:
   port: 8222
   ssl:
-    enabled: false
+    enabled: true
     key-store: classpath:keystore/keystore.p12
     key-store-password: Dinamo22**
     key-store-type: PKCS12

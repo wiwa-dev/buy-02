@@ -11,7 +11,7 @@ spring:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
 
-# JWT — même secret que les autres services
+# JWT —- même secret que les autres services
 jwt:
   secret: 0smkgpTVAhXxHq1lZEtvEySlVBr6U0OMN0NmLjWmJNxnTAsQaGPJ0AqsMVoQhrw9
   expiration: 86400000

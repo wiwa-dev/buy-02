@@ -252,7 +252,7 @@ public class OrderService {
             order.setUpdatedAt(LocalDateTime.now());
             Order saved = orderRepository.save(order);
 
-            // 📦 Decrement stock only on first transition to DELIVERED
+            /// 📦 Decrement stock only on first transition to DELIVERED
             if (newStatus == OrderStatus.DELIVERED && previousStatus != OrderStatus.DELIVERED) {
                 System.out.println("newStatus: " + newStatus);
                 System.out.println("previousStatus: " + previousStatus);

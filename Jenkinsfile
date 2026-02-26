@@ -61,6 +61,9 @@ pipeline {
                         if (file.contains('backend/services/media')) {
                             CHANGED_SERVICES.add('media')
                         }
+                        if (file.contains('backend/services/order')) {
+                            CHANGED_SERVICES.add('order')
+                        }
                         if (file.contains('frontend')) {
                             FRONTEND_CHANGED = true
                         }
@@ -73,6 +76,9 @@ pipeline {
                         }
                         if (file.contains('media-service.yml')) {
                             CHANGED_SERVICES.add('media')
+                        }
+                        if (file.contains('order-service.yml')) {
+                            CHANGED_SERVICES.add('order')
                         }
                     }
                     CHANGED_SERVICES = CHANGED_SERVICES.unique()
@@ -370,7 +376,7 @@ pipeline {
                     // 2️⃣ Rollback des images modifiées
                     script {
                         echo '🔄 Rollback des services modifiés...'
-                        def services = ['user-service', 'product-service', 'media-service', 'front-service', 'config-server', 'discovery', 'gateway']
+                        def services = ['user-service', 'product-service', 'media-service', 'order-service', 'front-service', 'config-server', 'discovery', 'gateway']
                         services.each {
                             svc -> echo "↩️ Rollback du service : ${svc}"
                             // Pull de l'ancienne version...
