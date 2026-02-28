@@ -34,7 +34,7 @@ import feign.FeignException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-// controller
+// controllers
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
