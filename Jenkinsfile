@@ -85,6 +85,7 @@ pipeline {
             }
         }
 
+    } // ✅ fermeture correcte de stages
 
     post {
         success {
