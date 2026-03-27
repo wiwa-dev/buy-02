@@ -21,7 +21,7 @@ pipeline {
                 sh 'docker compose version'
             }
         }
-        // Docker Login
+        // Docker Login/
         stage('Docker Login') {
             steps {
                 sh 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
