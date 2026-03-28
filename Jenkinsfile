@@ -4,7 +4,7 @@ pipeline {
     environment {
         API_SONAR = 'https://sonarqube.buy01.site/api'
     }
-
+//
     stages {
 
         stage('Initialize') {
