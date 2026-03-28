@@ -30,7 +30,14 @@ pipeline {
                                     ${tool 'sonar8'}/bin/sonar-scanner \
                                     -Dsonar.projectKey=frontend \
                                     -Dsonar.sources=src \
-                                    -Dsonar.exclusions=**/*.spec.ts
+                                    -Dsonar.exclusions=**/*.spec.ts \
+                                    ${env.CHANGE_ID ? """
+                                    -Dsonar.pullrequest.key=${env.CHANGE_ID} \
+                                    -Dsonar.pullrequest.branch=${env.BRANCH_NAME} \
+                                    -Dsonar.pullrequest.base=${env.CHANGE_TARGET}
+                                    """ : """
+                                    -Dsonar.branch.name=${env.BRANCH_NAME}
+                                    """}
                                     """
 
                                     def ceTaskId = sh(
